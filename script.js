@@ -1,18 +1,18 @@
 const Gameboard = (() => {
-    let board = Array(9).fill(null);
+    let board = Array(9).fill(null); // Buat array dengan 9 elemen kosong untuk mewakili papan permainan
   
-    const getBoard = () => board;
+    const getBoard = () => board; // Mengambil data papan saat ini
   
     const resetBoard = () => {
-      board = Array(9).fill(null);
+      board = Array(9).fill(null); // Mengatur ulang papan menjadi kosong
     };
   
     const setMarker = (index, marker) => {
-      if (board[index] === null) {
+      if (board[index] === null) { // Jika cell kosong, isi dengan marker (X atau O)
         board[index] = marker;
-        return true;
+        return true; // Tanda berhasil diatur
       }
-      return false;
+      return false; // Jika cell sudah terisi, tidak bisa diisi lagi
     };
   
     return { getBoard, resetBoard, setMarker };
@@ -35,7 +35,7 @@ const GameController = (() => {
       Gameboard.resetBoard();
       currentPlayerIndex = 0;
       isGameActive = true;
-      displayController.renderBoard();
+      displayController.renderBoard(); // Tampilkan papan awal
     };
   
     const playTurn = (index) => {
@@ -47,7 +47,7 @@ const GameController = (() => {
           displayController.displayResult("It's a tie!");
           isGameActive = false;
         } else {
-          currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
+          currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0; // Ganti giliran pemain
         }
         displayController.renderBoard();
       }
@@ -55,9 +55,9 @@ const GameController = (() => {
   
     const checkWin = () => {
       const winPatterns = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8],
-        [0, 3, 6], [1, 4, 7], [2, 5, 8],
-        [0, 4, 8], [2, 4, 6]
+        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Baris
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Kolom
+        [0, 4, 8], [2, 4, 6] // Diagonal
       ];
       return winPatterns.some(pattern =>
         pattern.every(index => Gameboard.getBoard()[index] === players[currentPlayerIndex].marker)
